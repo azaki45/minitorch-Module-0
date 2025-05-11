@@ -32,12 +32,20 @@ class Module:
     def train(self) -> None:
         """Set the mode of this module and all descendent modules to `train`."""
         # TODO: Implement for Task 0.4.
-        raise NotImplementedError("Need to implement for Task 0.4")
+        self.training = True
+        mods = self.modules()
+        for mod in mods:
+            mod.train()
+        # raise NotImplementedError("Need to implement for Task 0.4")
 
     def eval(self) -> None:
         """Set the mode of this module and all descendent modules to `eval`."""
         # TODO: Implement for Task 0.4.
-        raise NotImplementedError("Need to implement for Task 0.4")
+        self.training = False
+        mods = self.modules()
+        for mod in mods:
+            mod.eval()
+        # raise NotImplementedError("Need to implement for Task 0.4")
 
     def named_parameters(self) -> Sequence[Tuple[str, Parameter]]:
         """Collect all the parameters of this module and its descendents.
@@ -48,11 +56,33 @@ class Module:
 
         """
         # TODO: Implement for Task 0.4.
+        out = []
+        for k,v in self.__dict__["_parameters"].items():
+            out.append((str(k), v))
+        sub_mods_dict = self.__dict__["_modules"]
+        out1 = []
+        for parent, sub_mod in sub_mods_dict.items():
+            out1 = dict(sub_mod.named_parameters())
+            for k,v in out1.items():
+                out.append((f'{parent}.{k}', v))
+
+        return out
         raise NotImplementedError("Need to implement for Task 0.4")
 
     def parameters(self) -> Sequence[Parameter]:
         """Enumerate over all the parameters of this module and its descendents."""
         # TODO: Implement for Task 0.4.
+        out = []
+        for k,v in self.__dict__["_parameters"].items():
+            out.append(v)
+        sub_mods = self.modules()
+        out1 = []
+        for sub_mod in sub_mods:
+            out1 = sub_mod.parameters()
+            for v in out1:
+                out.append(v)
+
+        return out
         raise NotImplementedError("Need to implement for Task 0.4")
 
     def add_parameter(self, k: str, v: Any) -> Parameter:

@@ -96,7 +96,7 @@ def neg(x: float) -> float:
     return x * (-1.0)
 
 
-def lt(x: float, y: float) -> bool:
+def lt(x: float, y: float) -> float:
     """Checks if one number is less than the other.
 
     Args:
@@ -109,10 +109,10 @@ def lt(x: float, y: float) -> bool:
         true if x<y or vice-versa
 
     """
-    return x < y
+    return 1.0 if x<y else 0.0
 
 
-def eq(x: float, y: float) -> bool:
+def eq(x: float, y: float) -> float:
     """Checks if two numbers are equal.
 
     Args:
@@ -125,7 +125,7 @@ def eq(x: float, y: float) -> bool:
         True if x==y and False otherwise
 
     """
-    return x == y
+    return 1.0 if x==y else 0.0
 
 
 def max(x: float, y: float) -> float:
